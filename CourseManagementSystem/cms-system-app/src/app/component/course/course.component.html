@@ -1,0 +1,340 @@
+<br><br>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<div class="container bootstrap snippets bootdey">
+    <nav class="navbar navbar-expand-lg style=background-color: #087cfc;">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+          <form class="form-inline my-2 my-lg-0">
+            <!-- ngModelChange : makes the method fire everytime there is a change -->
+            <input name="searchTerm" class="form-control mr-sm-2" #searchForm="ngModel" ngModel (ngModelChange)="searchCourse(searchForm.value)" type="search" placeholder="Search courses..." aria-label="Search">
+          </form>
+          <button [hidden]="!isAdmin" type="button" class="btn btn-light" data-toggle="modal" data-target="#addCourseModal">Add New Courses</button>   
+          <button type="button" (click)="getCourses(true)" class="btn btn-light">
+            &nbsp;&nbsp;
+            <span>Refresh</span>
+          </button>
+        </div>
+      </nav>
+  
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box no-header clearfix">
+                <div class="main-box-body clearfix">
+                    <div class="table-responsive">
+                        <table class="table user-list">
+                            <thead>
+                                <tr>
+                                <th><span>Course Code</span></th>
+                                <th><span>Course Name</span></th>
+                                <th><span>Course Participants</span></th>
+                                <th><span>Course Type</span></th>
+                                <th><span>Course Duration</span></th>
+                                <th><span>Status Fees</span></th>
+                                <th><span>Action</span></th>
+                                <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let courses of courses">
+                                <tr>
+                                    <td >
+                                        {{courses?.courseCode}}
+                                    </td>
+                                    <td>{{courses?.courseName}}</td>
+                                    <td>
+                                        {{courses?.numberOfParticipants}}
+                                    </td>
+                                    <td>
+                                        {{courses?.courseType}}
+                                    </td>
+                                    <td>
+                                        {{courses?.courseDuration}}
+                                    </td>
+                                    <td>
+                                        {{courses?.courseFees}}
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <a (click)="onSelectUser(courses)" class="table-link text-warning">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                        <a  *ngIf="isAdminOrManager" (click)="onEditCourse(courses)" class="table-link text-info">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                        <a [hidden]="!isAdmin" (click)="onDeleteCourses(courses.courseCode)" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- view user modal -->
+<button [hidden]="true" type="button" class="btn btn-primary" data-toggle="modal" id="openCourseInfo" data-target="#viewCourseModel"></button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="viewCourseModel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{selectedCourse?.courseName}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+      <br>
+      <div class="container bootstrap snippets bootdey">
+        <div class="panel-body inf-content">
+            <div class="row">
+                <div class="col-md-4">
+                    <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip" src="/assets/CogentLogo/CogentLogo.png" data-original-title="Usuario"> 
+                </div>
+                <div class="col-md-6">
+                    <strong>Information</strong><br>
+                    <div class="table-responsive">
+                    <table class="table table-user-information">
+                        <tbody>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                        Course Code                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedCourse?.courseCode}}              
+                                </td>
+                            </tr>
+                            <tr>    
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                        Course Name                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedCourse?.courseName}}         
+                                </td>
+                            </tr>        
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                        Number of Participants                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedCourse?.numberOfParticipants}}          
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                        Course Description                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedCourse?.courseDescription}}              
+                                </td>
+                            </tr>
+                            <tr>    
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                        Course Type                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedCourse?.courseType}}         
+                                </td>
+                            </tr>        
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                        Course Duration                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedCourse?.courseDuration}}          
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                        Course Fees                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedCourse?.courseFees}}          
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>                                        
+      <br>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- add modal -->
+
+<button [hidden]="true" type="button" class="btn btn-primary" data-toggle="modal" id="openUserInfo" data-target="#addCourseModal"></button>
+
+<div [hidden]="!isAdmin" class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="addCourseModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Courses</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+      <br> 
+      <div class="myDiv">
+      <form #newCourseForm="ngForm" (ngSubmit)="onAddNewCourse(newCourseForm)">
+        <div class="form-group">
+            <label for="name">Course Code:</label>
+            <input type="text" required ngModel class="form-control" name="courseCode"  placeholder="Enter Code">
+          </div>
+        <div class="form-group">
+          <label for="username">Cours Name:</label>
+          <input type="text" required ngModel class="form-control" name="courseName" placeholder="Enter Name">
+        </div>
+        <div class="form-group">
+            <label for="email">Number of Participants:</label>
+            <input type="text" required ngModel class="form-control" name="numberOfParticipants" placeholder="Enter number of participants">
+        </div>
+        <div class="form-group">
+            <label for="email">Description:</label>
+            <input type="text" required ngModel class="form-control" name="courseDescription" placeholder="Enter Description">
+        </div>
+        <div class="form-group">
+            <label for="email">CourseType:</label>
+            <input type="text" required ngModel class="form-control" name="courseType" placeholder="Enter course Type">
+        </div>
+        <div class="form-group">
+            <label for="email">Duration:</label>
+            <input type="text" required ngModel class="form-control" name="courseDuration" placeholder="Enter Duration">
+        </div>
+        <div class="form-group">
+            <label for="email">Fees:</label>
+            <input type="text" required ngModel class="form-control" name="courseFees" placeholder="Enter Fees">
+        </div>
+
+          <button type="submit" style="display: none;" id="new-course-save"></button>
+      </form>  
+    </div>
+
+      <br>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="new-course-close">Close</button>
+        <button type="submit" (click)="saveNewCourse()" [disabled]="newCourseForm.invalid" class="btn btn-primary" data-dismiss="modal" id="new-course-save">Save User</button>
+      </div>
+    </div>
+ </div>
+</div>
+
+
+
+<!-- edit course model -->
+<button *ngIf="isAdminOrManager" [hidden]="true" type="button" class="btn btn-primary" data-toggle="modal" id="openCourserEdit" data-target="#CourseEdit"></button>
+
+<div class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="CourseEdit">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit {{editCourse?.courseName}}<small [hidden]="isAdminOrManager"> (read only)</small></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+      <br>
+
+      <div class="myDiv">
+      <form #editCourseForm="ngForm">
+        <div class="form-group">
+            <label for="courseCode">Course Code:</label>
+            <!-- we have 2 way binding, witch means when they change something on the template, it will update the acutally component -->
+            <input type="text" name="courseCode" [disabled]="!isAdminOrManager" required [(ngModel)]="editCourse.courseCode" class="form-control">
+          </div>
+        <div class="form-group">
+          <label for="courseName">Course Name</label>
+          <input type="text" [disabled]="!isAdminOrManager" required [(ngModel)]="editCourse.courseName"  class="form-control" name="courseName" >
+        </div>
+        <div class="form-group">
+            <label for="numberOfParticipants">Number of Participants</label>
+            <input type="text" [disabled]="!isAdminOrManager"  required [(ngModel)]="editCourse.numberOfParticipants" class="form-control" name="numberOfParticipants" >
+        </div>
+
+        <div class="form-group">
+            <label for="courseDescription">Course Description</label>
+            <input type="text" [disabled]="!isAdminOrManager"  required [(ngModel)]="editCourse.courseDescription" class="form-control" name="courseDescription" >
+        </div>
+
+        <div class="form-group">
+            <label for="courseType">Course Type</label>
+            <input type="text" [disabled]="!isAdminOrManager"  required [(ngModel)]="editCourse.courseType" class="form-control" name="courseType" >
+        </div>
+
+        <div class="form-group">
+            <label for="emcourseDurationail">Course Duration</label>
+            <input type="text" [disabled]="!isAdminOrManager"  required [(ngModel)]="editCourse.courseDuration" class="form-control" name="courseDuration" >
+        </div>
+
+        <div class="form-group">
+            <label for="courseFees">Course Fees</label>
+            <input type="text" [disabled]="!isAdminOrManager"  required [(ngModel)]="editCourse.courseFees" class="form-control" name="courseFees" >
+        </div>
+
+
+ 
+          <button type="submit" style="display: none;" id="new-course-save"></button>
+      </form>  
+    </div>
+
+      <br>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeeditCourseButton">Close</button>
+        <button type="submit" (click)="onUpdateCourse()" [disabled]="editCourseForm.invalid || !isAdminOrManager" class="btn btn-primary" data-dismiss="modal" id="new-course-save">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+
+ 
+

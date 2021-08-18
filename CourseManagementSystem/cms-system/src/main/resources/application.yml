@@ -1,0 +1,44 @@
+jwt:
+  secret: '[a-zA-Z0-9._]^+$Guidelines89797987forAlphabeticalArraNumeralsandOtherSymbo$'
+
+
+server:
+  port: 8080
+#  error:
+#    whitelabel:
+#      enabled: false
+#this will disable default spring whitelabel error page
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/CMS
+    password: password
+    username: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+#  mvc:
+#    throw-exception-if-no-handler-found: true
+#  resources:
+#    add-mappings: false
+
+#when we go to someurl that does not exist, instead of handling the url itself, it just going to throw the exception
+
+
+#spring.datasource.url=jdbc:mysql://localhost:3306/CMS
+#spring.datasource.username=root
+##implement a secuer way to store password latter
+#spring.datasource.password=password
+#spring.jpa.hibernate.ddl-auto=update
+#spring.jpa.show-sql=true
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+#spring.jpa.properties.hibernate.format_sql=true
+
+#jwt.secret = "][f[sfs][gd][f;[]fps[f;d@#dfsa$2kijhsjafalskdfh#"
+#
+#spring.mvc.throw-exception-if-no-handler-found=true
+#spring.mvc.add-mappings:false

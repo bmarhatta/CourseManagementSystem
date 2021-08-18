@@ -1,0 +1,42 @@
+<h1>Admin Course Management Portal</h1>
+<!-- were first chedcking if the titleAction is in the component , async means whatever is in titleAction$ will also be in title-->
+<p id="custom" *ngIf="titleAction$ | async as title">{{title}}</p> 
+<nav class="navbar navbar-expand-lg" style="background-color: #087cfc;">
+    <div class="mx-auto d-sm-flex d-block flex-sm-nowrap">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse text-center" id="navbarsExample11">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                                <!-- this simple action lisencer change the titleSubject -->
+                    <a class="nav-link " id="cource" (click)="changeTitle('Courses')" (click)="showDiv.courceDiv = !showDiv.courceDiv;showDiv.userDiv = false;showDiv.settingDiv = false;showDiv.profileDiv = false" >Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [hidden]="!isAdminOrManager" (click)="changeTitle('Users')" (click)="showDiv.userDiv = !showDiv.userDiv;showDiv.settingDiv = false;showDiv.courceDiv = false;showDiv.profileDiv = false"> Users</a>
+                </li>
+                <li class="nav-item">
+                    <!-- Hide this div if someone is not a admin -->
+                    <a [hidden]="!isAdmin" class="nav-link" (click)="changeTitle('Settings')" (click)="showDiv.settingDiv = !showDiv.settingDiv;showDiv.userDiv = false;showDiv.courceDiv = false;showDiv.profileDiv = false"> Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="changeTitle('Profile')" (click)="showDiv.profileDiv = !showDiv.profileDiv;showDiv.userDiv = false;showDiv.courceDiv = false;showDiv.settingDiv = false"> {{user.username}} </a>
+                </li>
+                <li class="nav-item">
+                    <!-- (click)="onLogOut()" -->
+                    <a class="nav-link" (click)="onLogOut()">Logout</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" (click)="changeTitle('Welcome, Linda')">Welcome, bishwo </a>
+                </li> -->
+            </ul>
+        </div>
+        
+    </div> 
+</nav>
+
+		<div *ngIf="showDiv.courceDiv"><app-course></app-course></div>
+		<div *ngIf="showDiv.userDiv"><app-user></app-user></div>
+		<div [hidden]="!isAdmin" *ngIf="showDiv.settingDiv"><app-resetpassword2></app-resetpassword2></div>
+        <div *ngIf="showDiv.profileDiv"><app-profile></app-profile></div>
+ 

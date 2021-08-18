@@ -1,0 +1,381 @@
+
+ 
+<br><br>
+
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+<div class="container bootstrap snippets bootdey">
+    <nav class="navbar navbar-expand-lg style=background-color: #087cfc;">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+          <form class="form-inline my-2 my-lg-0">
+            <!-- ngModelChange : makes the method fire everytime there is a change -->
+            <input name="searchTerm" class="form-control mr-sm-2" #searchForm="ngModel" ngModel (ngModelChange)="searchUsers(searchForm.value)" type="search" placeholder="Search users..." aria-label="Search">
+          </form>
+
+          <button [hidden]="!isAdminOrManager" type="button" class="btn btn-light" data-toggle="modal" data-target="#addUserModal">Add New User</button>
+          
+         
+          <button type="button" (click)="getUsers(true)" class="btn btn-light">
+            &nbsp;&nbsp;
+            <span>Refresh</span>
+          </button>
+        </div>
+      </nav>
+  
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box no-header clearfix">
+                <div class="main-box-body clearfix">
+                    <div class="table-responsive">
+                        <table class="table user-list">
+                            <thead>
+                                <tr>
+                                <th><span>User</span></th>
+                                <th><span>User ID</span></th>
+                                <th><span>Name</span></th>
+                                <th><span>Username</span></th>
+                                <th><span>Email</span></th>
+                                <th><span>Status</span></th>
+                                <th><span>Action</span></th>
+                                <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let appUser of users">
+                                <tr>
+                                    <td>
+                                        <img height="40" width="40" src="{{appUser?.profileImageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt="">
+                                    </td>
+                                    <td >
+                                        {{appUser?.userId}}
+                                    </td>
+                                    <td>{{appUser?.name}}</td>
+                                    <td>
+                                        {{appUser?.username}}
+                                    </td>
+                                    <td>
+                                        {{appUser?.email}}
+                                    </td>
+                                    <td>
+                                        <span [hidden]="!appUser?.active" class="badge badge-success">Active</span>
+                                        <span [hidden]="appUser?.active" class="badge badge-danger">Inactive</span>
+
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <a (click)="onSelectUser(appUser)" class="table-link text-warning">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                        <a *ngIf="isAdminOrManager" (click)="onEditUser(appUser)" class="table-link text-info">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                        <a [hidden]="!isAdmin" (click)="onDeleteUser(appUser.username)" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- view user modal -->
+<button [hidden]="true" type="button" class="btn btn-primary" data-toggle="modal" id="openUserInfo" data-target="#viewUserModel">Large modal</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="viewUserModel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{selectedUser?.name}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+      <br>
+      <div class="container bootstrap snippets bootdey">
+        <div class="panel-body inf-content">
+            <div class="row">
+                <div class="col-md-4">
+                    <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip" src="{{selectedUser?.profileImageUrl}}" data-original-title="Usuario"> 
+                </div>
+                <div class="col-md-6">
+                    <strong>Information</strong><br>
+                    <div class="table-responsive">
+                    <table class="table table-user-information">
+                        <tbody>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                        ID                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedUser?.userId}}              
+                                </td>
+                            </tr>
+                            <tr>    
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                        Name                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedUser?.name}}         
+                                </td>
+                            </tr>        
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                        Username                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedUser?.username}}          
+                                </td>
+                            </tr>
+        
+        
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                        Role                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <!-- not showing up. might delete latter -->
+                                    {{selectedUser?.roles.substring(5)}}          
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-envelope text-primary"></span> 
+                                        Email                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedUser?.email}}         
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                        Joined                                                
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{selectedUser?.joinDate | date: 'medium'}}         
+                                </td>
+                            </tr>
+                            <tr>        
+                                <!-- this checks if the user ever logged in -->
+                                <td *ngIf="selectedUser?.lastLoginDateDisplay">
+                                    <strong>
+                                        <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                        Last Login                                                
+                                    </strong>
+                                </td>
+                                <!-- this checks if the user ever logged in -->
+                                <td *ngIf="selectedUser?.lastLoginDateDisplay" class="text-primary">
+                                    {{selectedUser?.lastLoginDateDisplay | date: 'medium'}} 
+                                </td>
+                            </tr>   
+                            
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                        Status                                              
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <span [hidden]="!selectedUser?.active" class="badge badge-success">Active</span>
+                                    <span [hidden]="selectedUser?.active" class="badge badge-danger">Inactive</span>
+                                </td>
+                            </tr>
+
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                        Account
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <span [hidden]="!selectedUser?.notLocked" class="badge badge-success">Unlocked</span>
+                                    <span [hidden]="selectedUser?.notLocked" class="badge badge-danger">Locked</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>                                        
+      <br>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- add modal -->
+
+<button [hidden]="true" type="button" class="btn btn-primary" data-toggle="modal" id="openUserInfo" data-target="#addUserModal">Large modal</button>
+
+<div [hidden]="!isAdminOrManager" class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="addUserModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+      <br>
+      <div class="myDiv">
+      <form #newUserForm="ngForm" (ngSubmit)="onAddNewUser(newUserForm)">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" required ngModel class="form-control" name="name"  placeholder="Enter name">
+          </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" required ngModel class="form-control" name="username" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" required ngModel class="form-control" name="email" placeholder="Enter email">
+        </div>
+        <!-- if there a admin. they get to see all of this -->
+        <div *ngIf="isAdmin" class="form-group">
+            <label for="authority">Roles</label>
+        <select name="roles" required [(ngModel)]="editUser.roles" class="form-control">
+            <option value="ROLE_USER">ROLE_USER</option>
+            <option value="ROLE_HR">ROLE_HR</option>
+            <option value="ROLE_MANAGER">ROLE_MANAGER</option>
+            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+            <option value="ROLE_SUPER_ADMIN">ROLE_SUPER_ADMIN</option>
+        </select>
+        </div>
+        <div *ngIf="!isAdmin">
+            <label for="authority">Roles</label>
+            <input type="text" name="role" required ngModel="USER" readonly class="form-control">
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="active" type="checkbox" ngModel class="form-check-input">
+            <label class="form-check">
+              Active
+            </label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" name="notLocked" ngModel class="form-check-input">
+            <label class="form-check">
+              Unlock
+            </label>
+          </div>
+          <button type="submit" style="display: none;" id="new-user-save"></button>
+      </form>  
+    </div>
+
+      <br>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="new-user-close">Close</button>
+        <button type="submit" (click)="saveNewUser()" [disabled]="newUserForm.invalid" class="btn btn-primary" data-dismiss="modal" id="new-user-save">Save User</button>
+      </div>
+    </div>
+ </div>
+</div>
+
+
+
+<!-- //edit user model -->
+<button *ngIf="isAdminOrManager" [hidden]="true" type="button" class="btn btn-primary" data-toggle="modal" id="openUserEdit" data-target="#editUserModel">Large modal</button>
+
+<div class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="editUserModel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit {{editUser?.name}}<small [hidden]="isAdminOrManager"> (read only)</small></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+      <br>
+
+      <div class="myDiv">
+      <form #editUserForm="ngForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <!-- we have 2 way binding, witch means when they change something on the template, it will update the acutally component -->
+            <input type="text" name="name" [disabled]="!isAdminOrManager" required [(ngModel)]="editUser.name" class="form-control">
+          </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" [disabled]="!isAdminOrManager" required [(ngModel)]="editUser.username"  class="form-control" name="username" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" [disabled]="!isAdminOrManager"  required [(ngModel)]="editUser.email" class="form-control" name="email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="authority">Roles<small [hidden]="isAdmin"> (read only)</small></label>
+        <select *ngIf="isAdmin" name="roles" [disabled]="!isAdmin" required [(ngModel)]="editUser.roles" class="form-control">
+            <option value="ROLE_USER">ROLE_USER</option>
+            <option value="ROLE_HR">ROLE_HR</option>
+            <option value="ROLE_MANAGER">ROLE_MANAGER</option>
+            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+            <option value="ROLE_SUPER_ADMIN">ROLE_SUPER_ADMIN</option>
+        </select>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" name="active" [disabled]="!isManager" type="checkbox" [(ngModel)]="editUser.active"  class="form-check-input">
+            <label class="form-check">
+              Active <small [hidden]="isAdmin"> (read only)</small>
+            </label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" name="notLocked" [disabled]="!isManager" [(ngModel)]="editUser.notLocked"  class="form-check-input">
+            <label class="form-check">
+              Unlock <small [hidden]="isAdmin"> (read only)</small>
+            </label>
+          </div>
+          <button type="submit" style="display: none;" id="new-user-save"></button>
+      </form>  
+    </div>
+
+      <br>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeEditUserButton">Close</button>
+        <button type="submit" (click)="onUpdateUser()" [disabled]="editUserForm.invalid || !isAdminOrManager" class="btn btn-primary" data-dismiss="modal" id="new-user-save">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+ 
+
+ 
