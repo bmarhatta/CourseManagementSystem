@@ -136,6 +136,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
         user.setProfileImageUrl(getTemporaryProfileImageUrl(username));
         userRepo.save(user);
         saveProfileImage(user, profileImage);
+        LOGGER.info("New user password: " + password);
         return user;
     }
 

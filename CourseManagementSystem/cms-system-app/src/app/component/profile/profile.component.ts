@@ -65,7 +65,7 @@ export class ProfileComponent implements OnInit,OnDestroy {
           this.userService.addUsersToLocalCache(response);
           this.users = response; //setting responce to array of users
           this.refreshing = false;
-          console.log(this.users);
+          // console.log(this.users);
           if (showNotification) {
             this.sendNotification(NotificationType.SUCCESS, `${response.length} users loaded successfully.`)
           }

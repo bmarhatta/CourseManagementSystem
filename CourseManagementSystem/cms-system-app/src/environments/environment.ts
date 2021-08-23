@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080' //best practice to put your url in this environment file.//we can import this into our service and use it whenever we want
+  apiUrl: 'http://localhost:5001' //best practice to put your url in this environment file.//we can import this into our service and use it whenever we want
 
 };
 

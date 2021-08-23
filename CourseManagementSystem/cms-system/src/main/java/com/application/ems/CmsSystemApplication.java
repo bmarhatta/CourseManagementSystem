@@ -31,7 +31,7 @@ public class CmsSystemApplication {
 		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.setAllowedOrigins (Collections.singletonList("http://localhost:4200/")); //collection of our frontend server
+		corsConfiguration.setAllowedOrigins (Collections.singletonList("http://cms-system-frontend.s3-website.us-east-2.amazonaws.com/")); //collection of our frontend server
 		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
 				"Accept", "Jwt-Token", "Authorization", "Origin, Accept", "X-Requested-With",
 				"Access-Control-Request-Method", "Access-Control-Request-Headers"));

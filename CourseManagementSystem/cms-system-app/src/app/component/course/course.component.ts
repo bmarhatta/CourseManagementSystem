@@ -44,7 +44,7 @@ export class CourseComponent implements OnInit, OnDestroy {
         (response: Course[]) => {
           this.courseServices.addCoursesToLocalCache(response);
           this.courses = response; //setting responce to array of users
-          console.log(this.courses);
+          // console.log(this.courses);
           if (showNotification) {
             this.sendNotification(NotificationType.SUCCESS, `${response.length} courses loaded successfully.`)
           }
@@ -91,7 +91,7 @@ export class CourseComponent implements OnInit, OnDestroy {
 //sends all information to back end
 public onAddNewCourse(courseForm: NgForm): void {
   const formData = this.courseServices.createsCourseFormData(courseForm.value); //skipped picture because it did not work
-  console.log(formData)
+ // console.log(formData)
   this.subscriptions.push(
     this.courseServices.addUsers(formData).subscribe(
       (response: Course) => {

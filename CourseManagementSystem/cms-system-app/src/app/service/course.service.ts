@@ -49,7 +49,7 @@ export class CourseService {
   //creates courses form data
   public createsCourseFormData(course: Course): FormData{
     const formData = new FormData(); //creating formData object
-    console.log(course.courseCode,course.courseName,course.courseName,course.numberOfParticipants,course.courseDuration);
+    // console.log(course.courseCode,course.courseName,course.courseName,course.numberOfParticipants,course.courseDuration);
     formData.append('courseCode', course.courseCode);//append is how you write
     formData.append('courseName', course.courseName);
     formData.append('numberOfParticipants', JSON.stringify(course.numberOfParticipants)); //turning int to json string

@@ -69,18 +69,18 @@ export class AuthenticationService {
   public isUserLoggedIn(): boolean { 
     this.loadToken();
     if(this.token != null && this.token !== '') { //if token is not null and not empty
-      console.log("1work");
+      // console.log("1work");
       if(this.jwtHelper.decodeToken(this.token).sub != null || ''){  //decode the token and get the subject. if subject is not empty or null. we can move forward
-        console.log("2work");
+        // console.log("2work");
         if(!this.jwtHelper.isTokenExpired(this.token)){ //if token is NOT expired
-          console.log("3work");
+          // console.log("3work");
           this.loggedInUsername = this.jwtHelper.decodeToken(this.token).sub; //where setting the username in this class to the subject (we made subject the username in the backend)
             return true;
         }
       }
     } else { //if it is empty were just going to log the user out
         this.logOut();
-        console.log(1);
+        // console.log(1);
         return false;
       }
     return false;

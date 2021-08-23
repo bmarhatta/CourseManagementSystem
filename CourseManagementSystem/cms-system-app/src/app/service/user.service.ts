@@ -28,7 +28,7 @@ export class UserService {
 
   //reset users password
   public resetPassword(email: string): Observable<CustomHttpResponse | HttpErrorResponse>{ 
-    console.log(`${this.host}/user/resetPassword/${email}`)
+    // console.log(`${this.host}/user/resetPassword/${email}`)
     return this.http.get<CustomHttpResponse>(`${this.host}/user/resetPassword/${email}`);
   }
   

@@ -17,7 +17,6 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("/course")
 @RequiredArgsConstructor
-//@CrossOrigin
 public class CourseResource extends ExceptionHandling {
 
     private final CourseService courseService;

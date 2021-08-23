@@ -32,7 +32,6 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
-//@CrossOrigin("http://localhost:4200/**")
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = {"/","/user"}) //instead of overiding the base url with user, we can acutally leave the default...

@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'resetPassword', component: Resetpassword1Component},
   { path: 'user/management', component: loggedInNav, canActivate: [AuthenticationGuard]}, //returns true or false if the user can access this route
-  { path: '', redirectTo: '/login', pathMatch:'full'} //if the routes are non of the above. it will redirectTo to this uri... order is important. make sure this is the last route 
+  { path: '**', redirectTo: '/login', pathMatch:'full'} //if the routes are non of the above. it will redirectTo to this uri... order is important. make sure this is the last route 
 ];
 
 @NgModule({

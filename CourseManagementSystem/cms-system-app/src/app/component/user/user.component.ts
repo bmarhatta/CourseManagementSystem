@@ -43,7 +43,7 @@ export class UserComponent implements OnInit, OnDestroy {
         (response: User[]) => {
           this.userService.addUsersToLocalCache(response);
           this.users = response; //setting responce to array of users
-          console.log(this.users);
+          // console.log(this.users);
           if (showNotification) {
             this.sendNotification(NotificationType.SUCCESS, `${response.length} users loaded successfully.`)
           }

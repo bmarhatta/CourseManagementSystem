@@ -21,7 +21,7 @@ export class loggedInNav implements OnInit {
 
   ngOnInit(): void {
     document.getElementById('cource').click();
-    console.log(2);
+    // console.log(2);
     this.user = this.authenticationService.getUserFromLocalCache();
   }  
 
